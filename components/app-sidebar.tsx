@@ -6,6 +6,10 @@ import Link from "next/link";
 
 import { NavUser } from "./nav-user";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { AccountSwitcher } from "./account-switcher";
+import { mailComponents } from "./mailComponents"; // Import the mail components with icons
+
 import {
   Sidebar,
   SidebarContent,
@@ -19,13 +23,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
-import { AccountSwitcher } from "./account-switcher";
-import { sampleData } from "@/lib/sample-data";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [activeItem, setActiveItem] = React.useState(sampleData.navMain[0]);
-  const [mails, setMails] = React.useState(sampleData.mails);
+  const [activeItem, setActiveItem] = React.useState("Inbox");
   const { setOpen } = useSidebar();
 
   return (
@@ -34,6 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row"
       {...props}
     >
+      {/* Sidebar Menu */}
       <Sidebar
         collapsible="none"
         className="!w-[calc(var(--sidebar-width-icon)_+_1px)] border-r"
@@ -55,53 +56,56 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
+
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
+              {/* Sidebar Menu */}
               <SidebarMenu>
-                {sampleData.navMain.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      tooltip={{
-                        children: item.title,
-                        hidden: false,
-                      }}
-                      onClick={() => {
-                        setActiveItem(item);
-                        const mail = sampleData.mails.sort(
-                          () => Math.random() - 0.5
-                        );
-                        setMails(
-                          mail.slice(
-                            0,
-                            Math.max(5, Math.floor(Math.random() * 10) + 1)
-                          )
-                        );
-                        setOpen(true);
-                      }}
-                      isActive={activeItem.title === item.title}
-                      className="px-2.5 md:px-2"
-                    >
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {Object.keys(mailComponents).map((key) => {
+                  const { component: Component, icon: Icon } =
+                    mailComponents[key];
+
+                  return (
+                    <SidebarMenuItem key={key}>
+                      <SidebarMenuButton
+                        tooltip={{ children: key, hidden: false }}
+                        onClick={() => {
+                          setActiveItem(key);
+                          setOpen(true);
+                        }}
+                        isActive={activeItem === key}
+                        className="px-2.5 md:px-2 flex items-center gap-2"
+                      >
+                        <Icon className="size-5" /> {/* Render the icon */}
+                        <span>{key}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+
         <SidebarFooter>
-          <NavUser user={sampleData.accounts[0]} />
+          <NavUser
+            user={{
+              name: "User",
+              email: "user@example.com",
+              avatar: "/images/default-avatar.png",
+            }}
+          />
         </SidebarFooter>
       </Sidebar>
 
+      {/* Render Active Mail Component */}
       <Sidebar collapsible="none" className="hidden flex-1 md:flex">
         <SidebarHeader className="gap-3.5 border-b p-4">
           <AccountSwitcher />
           <div className="flex w-full items-center justify-between">
             <div className="text-base font-medium text-foreground">
-              {activeItem.title}
+              {activeItem}
             </div>
             <Label className="flex items-center gap-2 text-sm">
               <span>Unreads</span>
@@ -113,22 +117,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
-              {mails.map((mail) => (
-                <Link
-                  href={`/dashboard/mail/${mail.id}`}
-                  key={mail.id}
-                  className="flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                >
-                  <div className="flex w-full items-center gap-2">
-                    <span>{mail.name}</span>{" "}
-                    <span className="ml-auto text-xs">{mail.date}</span>
-                  </div>
-                  <span className="font-medium">{mail.subject}</span>
-                  <span className="line-clamp-2 w-[260px] whitespace-break-spaces text-xs">
-                    {mail.teaser}
-                  </span>
-                </Link>
-              ))}
+              {React.createElement(mailComponents[activeItem].component)}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

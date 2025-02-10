@@ -1,6 +1,33 @@
-import { ArchiveX, File, Inbox, Send, Trash2 } from "lucide-react"
+import { ArchiveX, File, Inbox, Send, Trash2 } from "lucide-react";
 
-export const sampleData = {
+export const sampleData: {
+  accounts: { id: number; name: string; email: string; avatar: string }[];
+  navMain: { title: string; url: string; icon: any; isActive: boolean }[];
+  mails: {
+    id: number;
+    name: string;
+    email: string;
+    subject: string;
+    date: string;
+    teaser: string;
+  }[];
+  trashMails: {
+    id: number;
+    name: string;
+    email: string;
+    subject: string;
+    date: string;
+    teaser: string;
+  }[];
+  archivedMails: {
+    id: number;
+    name: string;
+    email: string;
+    subject: string;
+    date: string;
+    teaser: string;
+  }[];
+} = {
   accounts: [
     {
       id: 1,
@@ -145,5 +172,6 @@ export const sampleData = {
         "To celebrate our recent project success, I'd like to organize a team dinner.\nAre you available next Friday evening? Please let me know your preferences.",
     },
   ],
-}
-
+  trashMails: [],
+  archivedMails: [],
+};

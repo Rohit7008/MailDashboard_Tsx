@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Correct import for App Router
 import { Archive, Trash2, Reply, ReplyAll, Forward, Send } from "lucide-react";
 import { sampleData } from "@/lib/sample-data";
 import { Button } from "@/components/ui/button";
@@ -49,16 +49,31 @@ export default function MailPage({ params }: { params: { id: string } }) {
     setReplyText("");
   };
 
+  // Archive email function
+  const handleArchive = () => {
+    console.log("Archiving email:", mail.id);
+    sampleData.archivedMails.push(mail);
+    setMail(null);
+    router.push("/dashboard/mail/archive");
+  };
+
+  // Move email to trash function
+  const handleTrash = () => {
+    console.log("Moving email to trash:", mail.id);
+    sampleData.trashMails.push(mail);
+    setMail(null);
+    router.push("/dashboard/mail/trash");
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar Section */}
       <div className="flex justify-between p-4 border-b">
         <div className="flex gap-2">
-          {/* Clickable but no function */}
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={handleArchive}>
             <Archive className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={handleTrash}>
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>

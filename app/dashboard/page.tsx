@@ -24,7 +24,6 @@ export default function Page() {
     >
       {/* Ensuring sidebar and content are in a flex container */}
       <div className="flex h-screen w-full">
-        <AppSidebar />
 
         {/* Main Content Wrapper */}
         <div className="flex flex-1 flex-col h-full">
