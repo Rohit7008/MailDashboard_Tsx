@@ -22,6 +22,7 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
+      
       {/* Ensuring sidebar and content are in a flex container */}
       <div className="flex h-screen w-full">
 

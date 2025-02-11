@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 
 // Import mail components
-import Archive from "./mail/archive";
+import Archive from "./mail/Archive";
 import Drafts from "./mail/Drafts";
-import Inbox from "./mail/Inbox";
+import Inbox from "../app/dashboard/mail/Inbox";
 import Sent from "./mail/Sent";
 import Trash from "./mail/Trash";
 

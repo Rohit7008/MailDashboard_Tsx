@@ -31,7 +31,7 @@ export default function MailPage({ params }: { params: { id: string } }) {
       <div className="p-4 flex flex-col items-center justify-center h-full">
         <h1 className="text-xl font-semibold">Email not found</h1>
         <p className="text-gray-500">It may have been deleted or moved.</p>
-        <Button onClick={() => router.push("/dashboard/mail")} className="mt-4">
+        <Button onClick={() => router.push("/dashboard/inbox")} className="mt-4">
           Back to Inbox
         </Button>
       </div>
