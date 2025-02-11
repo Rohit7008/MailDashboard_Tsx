@@ -18,7 +18,7 @@ export default function Page() {
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "350px",
+          "--sidebar-width": "250px",
         } as React.CSSProperties
       }
     >
@@ -41,8 +41,8 @@ export default function Page() {
           </header>
 
           <div className="flex flex-1 flex-col gap-4 p-4">
-            <h1 className="text-2xl font-bold">Welcome to your Inbox</h1>
-            <p>Select an email from the sidebar to view its contents.</p>
+            <h1 className="text-2xl font-bold">Welcome to Mail Dashboard</h1>
+            <p>Select an email from the Inbox to view its contents.</p>
           </div>
         </div>
       </div>
