@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { sampleData } from "@/lib/sample-data"; // Ensure correct import
+import { sampleData } from "@/lib/sample-data";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import MailPage from "./[id]/page"; // Import mail details page component
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,22 +16,23 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-
 export default function InboxPage() {
-  return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "250px",
-        } as React.CSSProperties
-      }
-    >
-      <div className="flex h-screen w-full">
-        {/* Sidebar */}
-        
+  const router = useRouter();
+  const [selectedMailId, setSelectedMailId] = useState<string | null>(null);
 
-        {/* Main Content */}
-        <div className="flex flex-1 flex-col h-full">
+  const handleMailClick = (mailId: number) => {
+    setSelectedMailId(mailId.toString()); // Store selected mail ID
+  };
+
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen w-full">
+        {/* Sidebar - Shrinks when an email is selected */}
+        <div
+          className={`transition-all duration-300 ${
+            selectedMailId ? "w-1/3" : "w-full"
+          } border-r p-4 overflow-y-auto`}
+        >
           <header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4">
             <Breadcrumb>
               <BreadcrumbList>
@@ -46,17 +49,15 @@ export default function InboxPage() {
             </Breadcrumb>
           </header>
 
-          {/* Inbox Content */}
-          <div className="flex flex-1 flex-col p-4 overflow-y-auto">
+          {/* Inbox List */}
+          <div className="flex flex-col">
             <h1 className="text-2xl font-bold">Inbox</h1>
-
-            {/* Email List */}
             <div className="mt-4 space-y-2">
               {sampleData.mails.map((mail) => (
-                <Link
-                  href={`/dashboard/mail/${mail.id}`}
+                <div
                   key={mail.id}
-                  className="flex flex-col border p-4 rounded-lg hover:bg-gray-100"
+                  onClick={() => handleMailClick(mail.id)}
+                  className="cursor-pointer flex flex-col border p-4 rounded-lg hover:bg-gray-100 transition-all"
                 >
                   <div className="flex justify-between">
                     <span className="font-medium">{mail.name}</span>
@@ -66,11 +67,18 @@ export default function InboxPage() {
                   <p className="text-sm text-gray-600 line-clamp-2">
                     {mail.teaser}
                   </p>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
         </div>
+
+        {/* Mail Details - Rendered when an email is selected */}
+        {selectedMailId && (
+          <div className="w-2/3 p-4">
+            <MailPage params={{ id: selectedMailId }} />
+          </div>
+        )}
       </div>
     </SidebarProvider>
   );
