@@ -62,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="flex items-center gap-3 px-4 py-2"
             >
-              <Link href="/app/settings">
+              <Link href="/dashboard/settings">
                 <Settings className="size-6" />
                 <span className="text-sm font-medium">Settings</span>
               </Link>

@@ -1,32 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import type React from "react"; // Added import for React
-import { AppSidebar } from "../../components/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar"; // Ensure Sidebar is included
 
-export default function Page() {
+export default function SettingsPage() {
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "350px",
-        } as React.CSSProperties
-      }
-    >
-      
-      {/* Ensuring sidebar and content are in a flex container */}
+    <SidebarProvider>
       <div className="flex h-screen w-full">
+        
 
-        {/* Main Content Wrapper */}
+        {/* Main Content */}
         <div className="flex flex-1 flex-col h-full">
           <header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4">
             <Breadcrumb>
@@ -36,16 +27,25 @@ export default function Page() {
                     <Link href="/dashboard">Dashboard</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
+
+                {/* Breadcrumb Separator */}
+                <BreadcrumbSeparator className="hidden md:block" />
+
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/dashboard/settings">Settings</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </header>
 
           <div className="flex flex-1 flex-col gap-4 p-4">
-            <h1 className="text-2xl font-bold">Welcome to your Inbox</h1>
-            <p>Select an email from the sidebar to view its contents.</p>
+            <h1 className="text-2xl font-bold">Settings</h1>
+            <p>Manage your preferences and account settings here.</p>
           </div>
         </div>
       </div>
     </SidebarProvider>
   );
-} 
+}
