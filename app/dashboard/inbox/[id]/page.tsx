@@ -10,8 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 export default function MailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
 
+  // Ensure `id` is treated as a string and matched properly
   const mail =
     sampleData.mails.find((m) => m.id.toString() === params.id) || null;
+
   const [replyText, setReplyText] = useState("");
   const [isSending, setIsSending] = useState(false);
 
@@ -33,37 +35,34 @@ export default function MailPage({ params }: { params: { id: string } }) {
   // Action Handlers
   const handleArchive = () => {
     console.log(`Archiving email with id ${mail.id}`);
-    // TODO: Implement actual archive logic
     router.push("/dashboard/inbox");
   };
 
   const handleTrash = () => {
     console.log(`Trashing email with id ${mail.id}`);
-    // TODO: Implement actual trash logic
     router.push("/dashboard/inbox");
   };
 
   const handleReply = () => {
     console.log(`Replying to email with id ${mail.id}`);
-    // Optionally, you could focus the reply textarea or prefill with quoted text
   };
 
   const handleReplyAll = () => {
     console.log(`Reply all for email with id ${mail.id}`);
-    // TODO: Implement reply all functionality
   };
 
   const handleForward = () => {
     console.log(`Forwarding email with id ${mail.id}`);
-    // TODO: Implement forward functionality
   };
 
   // Simulate sending a reply asynchronously
   const handleSendReply = async () => {
     if (!replyText.trim()) return; // Prevent sending empty replies
     setIsSending(true);
-    // Simulate a network request (e.g., call an API endpoint)
+
+    // Simulate a network request
     await new Promise((resolve) => setTimeout(resolve, 1000));
+
     console.log(`Reply sent: ${replyText}`);
     setReplyText("");
     setIsSending(false);
@@ -72,7 +71,7 @@ export default function MailPage({ params }: { params: { id: string } }) {
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex justify-between p-4 border-b">
+      <div className="flex justify-between p-4 border-b bg-gray-50">
         <div className="flex gap-2">
           <Button variant="ghost" size="icon" onClick={handleArchive}>
             <Archive className="h-4 w-4" />
@@ -95,7 +94,7 @@ export default function MailPage({ params }: { params: { id: string } }) {
       </div>
 
       {/* Email Content */}
-      <div className="flex-1 overflow-auto p-4">
+      <div className="flex-1 overflow-auto p-6">
         <h1 className="text-2xl font-bold mb-4">{mail.subject}</h1>
         <div className="mb-4 text-sm text-gray-600">
           <p>
@@ -105,11 +104,12 @@ export default function MailPage({ params }: { params: { id: string } }) {
             <strong>Date:</strong> {mail.date}
           </p>
         </div>
+        <hr className="my-2" />
         <div className="whitespace-pre-wrap text-gray-800">{mail.teaser}</div>
       </div>
 
       {/* Reply Section */}
-      <div className="border-t p-4">
+      <div className="border-t p-4 bg-gray-50">
         <h2 className="text-lg font-semibold mb-2">Reply</h2>
         <Textarea
           value={replyText}
