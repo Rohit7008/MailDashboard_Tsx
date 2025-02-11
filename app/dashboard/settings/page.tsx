@@ -6,7 +6,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar"; // Ensure Sidebar is included
@@ -15,7 +14,6 @@ export default function SettingsPage() {
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full">
-        
 
         {/* Main Content */}
         <div className="flex flex-1 flex-col h-full">
@@ -27,10 +25,6 @@ export default function SettingsPage() {
                     <Link href="/dashboard">Dashboard</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-
-                {/* Breadcrumb Separator */}
-                <BreadcrumbSeparator className="hidden md:block" />
-
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link href="/dashboard/settings">Settings</Link>
