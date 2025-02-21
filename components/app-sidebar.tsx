@@ -4,7 +4,6 @@ import * as React from "react";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Inbox, Settings } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 import { NavUser } from "./nav-user";
 import { AccountSwitcher } from "./account-switcher";
@@ -30,19 +29,15 @@ const menuItems = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Sidebar
-      collapsible
-      className={`overflow-hidden ${collapsed ? "w-16" : "w-64"}`}
-      {...props}
-    >
+    <Sidebar className="w-64 overflow-hidden" {...props}>
       <header className="sticky top-0 z-10 bg-white p-4 border-b">
-        <SidebarHeader className="top-0 z-10 p-4  flex justify-between items-center">
+        <SidebarHeader className="top-0 z-10 p-4 flex justify-between items-center">
           <AccountSwitcher />
         </SidebarHeader>
       </header>
+
       {/* Main Navigation */}
       <SidebarContent>
         <SidebarMenu>
@@ -54,13 +49,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   pathname === href ? "bg-gray-100 dark:bg-gray-800" : ""
                 }`}
                 aria-label={name}
-                onClick={() => name === "Inbox" && setCollapsed(!collapsed)}
               >
                 <Link href={href} className="flex items-center gap-3">
                   <Icon className="size-6" />
-                  {!collapsed && (
-                    <span className="text-sm font-medium">{name}</span>
-                  )}
+                  <span className="text-sm font-medium">{name}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -70,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       {/* Footer with NavUser */}
       <SidebarFooter className="p-4 border-t">
-        {!collapsed && <NavUser user={sampleData.accounts[0]} />}
+        <NavUser user={sampleData.accounts[0]} />
       </SidebarFooter>
     </Sidebar>
   );
