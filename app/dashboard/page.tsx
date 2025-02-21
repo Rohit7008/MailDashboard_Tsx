@@ -6,7 +6,6 @@ import {
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
 export default function InboxIndex() {
