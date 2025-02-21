@@ -1,15 +1,19 @@
 import MailList from "./@maillist/MailList";
+import { ReactNode } from "react";
 
-export default function InboxLayout({
-  children, // This will display the selected email (id/page.tsx)
-}: {
-  children: React.ReactNode;
-}) {
+// Define the expected props for InboxLayout
+interface LayoutProps {
+  children: ReactNode;
+  maillist: ReactNode; // Ensure this is included
+}
+
+export default function InboxLayout({ children, maillist }: LayoutProps) {
   return (
     <div className="flex h-screen">
       {/* Sidebar - Mail List */}
       <div className="w-1/3 border-r p-4">
-        <MailList />
+        {maillist}{" "}
+        {/* Pass maillist prop instead of directly rendering MailList */}
       </div>
 
       {/* Selected Mail Content */}
