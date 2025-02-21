@@ -4,15 +4,16 @@ import { ReactNode } from "react";
 // Define the expected props for InboxLayout
 interface LayoutProps {
   children: ReactNode;
-  maillist: ReactNode; // Ensure this is included
+  Maillist: ReactNode; // Ensure this is included
 }
 
-export default function InboxLayout({ children, maillist }: LayoutProps) {
+export default function InboxLayout({ children, Maillist }: LayoutProps) {
   return (
     <div className="flex h-screen">
       {/* Sidebar - Mail List */}
       <div className="w-1/3 border-r p-4">
-        {maillist}{" "}
+        {Maillist}
+        <MailList />
         {/* Pass maillist prop instead of directly rendering MailList */}
       </div>
 
