@@ -1,11 +1,10 @@
 import MailList from "./@maillist/MailList";
-import { ReactNode } from "react";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-export default function InboxLayout({ children }: LayoutProps) {
+export default function InboxLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex h-screen">
       {/* Sidebar - Mail List */}
@@ -13,7 +12,7 @@ export default function InboxLayout({ children }: LayoutProps) {
         <MailList />
       </div>
 
-      {/* Selected Mail Content */}
+      {/* Right Panel: Render children (either the inbox page or an email page) */}
       <div className="w-2/3 p-4">{children}</div>
     </div>
   );
