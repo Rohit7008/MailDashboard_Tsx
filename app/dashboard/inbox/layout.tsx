@@ -1,19 +1,19 @@
 import MailList from "./@maillist/MailList";
 
-export default function InboxLayout({
-  children,
-}: {
+interface InboxLayoutProps {
   children: React.ReactNode;
-}) {
+  maillist: boolean; // ✅ Make it required
+}
+
+export default function InboxLayout({ children, maillist }: InboxLayoutProps) {
   return (
     <div className="flex h-screen">
-      {/* Sidebar - Mail List */}
-      <div className="w-1/3 border-r p-4">
-        <MailList />
-      </div>
-
-      {/* Right Panel: Render children (either the inbox page or an email page) */}
-      <div className="w-2/3 p-4">{children}</div>
+      {maillist && (
+        <div className="w-1/3 border-r p-4">
+          <MailList />
+        </div>
+      )}
+      <div className={maillist ? "w-2/3 p-4" : "w-full p-4"}>{children}</div>
     </div>
   );
 }
